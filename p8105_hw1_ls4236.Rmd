@@ -48,15 +48,38 @@ plot_temp_th
 
 ggsave("plot_temp_th.png", plot_temp_th, width = 8, height = 5)
 ```
-Overall, the scatterplot shows that the temperature has increased over time, rising from about 30°F in early January to around 50°F in mid-January. Despite the upward trend, there has been frequent drastic fluctuations in daily temperature. Humidity has also shown a generally positive correlation with temperature, with higher values more common at warmer temperatures in mid-January.
+Overall, the scatterplot shows that the temperature has increased over time, rising from about 30°F in early January to around 50°F in mid-January. Despite the upward trend, there has been frequent large fluctuations in daily temperature. Humidity has shown a generally positive correlation with temperature increase, with higher values more common when temperatures are climbing, especially in mid-January.
 
 
-## Including Plots
+## Problem 2
 
-You can also embed plots, for example:
+Here create a dataframe.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r dataframe_create}
+set.seed(123)
+df <-
+  tibble(
+    vec_numeric = rnorm(10, mean=0, sd=1),
+    vec_logical = vec_numeric > 0,
+    vec_char = c(rep("apple",2), rep("grape",3), rep("kiwi",5)),
+    vec_factor = factor(vec_char, levels = c("apple", "grape", "kiwi"))
+  )
+
+df
 ```
+- The mean value of the column `vec_numeric` is `r df %>% pull(vec_numeric) %>% mean()`.
+- The mean value of the column `vec_logical` is `r df %>% pull(vec_logical) %>% mean()`.
+- The mean value of the column `vec_char` is `r df %>% pull(vec_char) %>% mean()`.
+- The mean value of the column `vec_factor` is `r df %>% pull(vec_factor) %>% mean()`.
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Next, try to applies the `as.numeric` function to the logical, character, and factor variables.
+```{r, eval=FALSE}
+as.numeric(df$vec_logical)
+as.numeric(df$vec_char)
+as.numeric(df$vec_factor)
+```
+- Applying `as.numeric` function to a logical vector converts `TRUE` to 1 and `FALSE` to 0. 
+- For a character vector, the conversion does not work and produces `NA` values only.
+- For a factor vector, for elements with predefined level, it returns the internal integer codes of the factor levels, and returns `NA` for elements that do not belong to either of the predefined level. 
+
+This helps explain why `mean` functions works on logical vector (proportion of TRUEs), fails on character vector, and sometimes fails to produce results on factor vector. Even if it successfully produce results on factor vector, it still has little statistical interpretations.
