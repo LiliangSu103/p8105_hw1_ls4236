@@ -7,16 +7,49 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 ```
 
 ## Problem 1
 
-
+Load the `moderndive` library and `early_january_weather` dataset.
 ```{r data_loading}
 library(moderndive)
 
 data("early_january_weather")
 ```
+
+### Data Description
+
+First of all, I try to write a brief description of the dataset using inline R code.
+
+```{r check_the_data}
+head(early_january_weather)
+```
+As the above table shows, in `early_january_weather` dataset, there are `r nrow(early_january_weather)` rows (samples) and `r ncol(early_january_weather)` columns (variables), including `r colnames(early_january_weather)`. Specifically, key variables include:
+
+- `origin`(`character`): the location of weather station.
+- `year, month, day, hour`(`integer`): Time of recording.
+- `temp` (`double`): air temperature in Fahrenheit.
+- `humid` (`double`): relative humidity between 0 and 1.
+- `wind_dir, wind_speed` (`double`): wind direction (in degrees) and speed(in mph).
+- `time_hour` (`POSIXct`): Date and hour of the recording as a POSIXct date.
+
+Notably, the `temp` column has an average temperature of `r mean(early_january_weather$temp, na.rm = TRUE)`.
+
+### Plotting
+
+Secondly, I try to create a scatterplot of `temp`(y) vs `time_hour`(x), with color points using the `humid` variable.
+
+```{r}
+plot_temp_th <- ggplot(early_january_weather, aes(x = time_hour,  y = temp, color = humid)) + geom_point() + labs(x = "Time (hourly)", y = "Temperature", color = "Humidity")
+
+plot_temp_th
+
+ggsave("plot_temp_th.png", plot_temp_th, width = 8, height = 5)
+```
+Overall, the scatterplot shows that the temperature has increased over time, rising from about 30°F in early January to around 50°F in mid-January. Despite the upward trend, there has been frequent drastic fluctuations in daily temperature. Humidity has also shown a generally positive correlation with temperature, with higher values more common at warmer temperatures in mid-January.
+
 
 ## Including Plots
 
