@@ -82,4 +82,4 @@ as.numeric(df$vec_factor)
 - For a character vector, the conversion does not work and produces `NA` values only.
 - For a factor vector, for elements with predefined level, it returns the internal integer codes of the factor levels, and returns `NA` for elements that do not belong to either of the predefined level. 
 
-This helps explain why `mean` functions works on logical vector (proportion of TRUEs), fails on character vector, and sometimes fails to produce results on factor vector. Even if it successfully produce results on factor vector, it still has little statistical interpretations.
+This helps explain why `mean` functions works on logical vector (proportion of `TRUE`s), fails on character vector, and sometimes fails to produce results on factor vector. Even if it successfully produce results on factor vector, it still has little statistical interpretations.
