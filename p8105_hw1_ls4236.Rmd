@@ -42,7 +42,10 @@ Notably, the `temp` column has an average temperature of `r mean(early_january_w
 Secondly, I try to create a scatterplot of `temp`(y) vs `time_hour`(x), with color points using the `humid` variable.
 
 ```{r}
-plot_temp_th <- ggplot(early_january_weather, aes(x = time_hour,  y = temp, color = humid)) + geom_point() + labs(x = "Time (hourly)", y = "Temperature", color = "Humidity")
+plot_temp_th <- 
+  ggplot(early_january_weather, aes(x = time_hour,  y = temp, color = humid)) + 
+  geom_point() + 
+  labs(x = "Time (hourly)", y = "Temperature", color = "Humidity")
 
 plot_temp_th
 
